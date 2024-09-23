@@ -9,7 +9,7 @@ const nextConfig = {
         headers: [
           {
             key: "X-Forwarded-Host",
-            value: "bombasguadalajara.com",
+            value: "test.bombasguadalajara.com",
           },
         ],
       },
