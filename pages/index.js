@@ -35,6 +35,17 @@ const useStyles = makeStyles(styles);
 export default function Components(props) {
   const classes = useStyles();
   const { ...rest } = props;
+
+  const [headers, setHeaders] = useState(null);
+
+  useEffect(() => {
+    fetch("/api/check-headers")
+      .then((response) => response.json())
+      .then((data) => setHeaders(data));
+  }, []);
+
+  if (!headers) return <div>Loading...</div>;
+
   return (
     <div>
       <Header
@@ -62,6 +73,25 @@ export default function Components(props) {
           </GridContainer>
         </div>
       </Parallax>
+      <div>
+        <h1>All Headers</h1>
+        <ul>
+          {headers.allHeaders.map(({ key, value }) => (
+            <li key={key}>
+              {key}: {value}
+            </li>
+          ))}
+        </ul>
+
+        <h1>CloudFront Headers</h1>
+        <ul>
+          {headers.cloudFrontHeaders.map(({ key, value }) => (
+            <li key={key}>
+              {key}: {value}
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
         <SectionBasics />
